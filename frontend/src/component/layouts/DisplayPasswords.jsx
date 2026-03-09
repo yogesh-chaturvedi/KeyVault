@@ -1,10 +1,12 @@
 import React from 'react'
 import PasswordCard from '../ui/cards/PasswordCard'
 import helpers from '../../utils/helpers'
+import { useNavigate } from 'react-router-dom';
 
 
 const DisplayPasswords = ({ vaults }) => {
     const { getSiteName } = helpers;
+    const navigate = useNavigate();
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
