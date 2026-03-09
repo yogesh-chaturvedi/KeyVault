@@ -16,7 +16,7 @@ export const PasswordProvider = ({ children }) => {
 
             const response = await axios({
                 method: 'get',
-                url: `http://localhost:3000/api/password/fetch`,
+                url: `${import.meta.env.VITE_BASE_URL}/api/password/fetch`,
                 withCredentials: true
             })
 

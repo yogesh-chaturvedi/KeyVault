@@ -10,11 +10,11 @@ export const HealthContextProvider = ({ children }) => {
         try {
             const response = await axios({
                 method: 'get',
-                url: 'http://localhost:3000/check/health',
+                url: `${import.meta.env.VITE_BASE_URL}/check/health`,
             })
 
             const { message } = response.data;
-            console.log(message)
+
         }
         catch (error) {
             console.error('verifyUser error', error)
