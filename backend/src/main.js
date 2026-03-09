@@ -13,7 +13,7 @@ const UnlockVaultRoute = require('./router/UnlockVaultRoutes')
 const globalErrorHandler = require('./middlewares/error.middleware')
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: "https://key-vault-swart.vercel.app",
     credentials: true
 }))
 
