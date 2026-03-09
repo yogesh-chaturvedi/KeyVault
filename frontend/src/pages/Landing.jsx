@@ -18,7 +18,7 @@ const Landing = () => {
 
     const { passwords, results } = useContext(PasswordContext)
 
-    const displayPasswords = results.length > 0 ? results : passwords;
+    const displayPasswords = results?.length > 0 ? results : passwords;
 
     const recentlyAdded = displayPasswords?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6)
 
