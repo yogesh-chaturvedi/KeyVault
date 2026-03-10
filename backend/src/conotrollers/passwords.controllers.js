@@ -1,15 +1,10 @@
 const PasswordModel = require('../models/Password');
-const UserModel = require('../models/User');
 const { decryptPassword } = require('../utils/decryption');
-const deriveKey = require('../utils/deriveKey');
 const { encryptPassword } = require('../utils/encryption');
 const zxcvbn = require('zxcvbn')
-const vaultSessions = require('../utils/vaultSession')
 const helpers = require('../utils/helpers')
 
-
 const { capitalizeWord } = helpers;
-
 
 const addPassword = async (req, res, next) => {
     try {
@@ -88,37 +83,6 @@ const fetchPassword = async (req, res, next) => {
     }
     catch (error) {
         console.error('fetchPassword controller failed', error)
-        next(error)
-    }
-}
-
-
-const revealPassword = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const item = await PasswordModel.findOne({
-            _id: id,
-            userId: req.user._id
-        });
-
-        if (!item) {
-            return res.status(404).json({ message: "Password not found", success: false });
-        }
-
-        const decrypted = decryptPassword(
-            item.encryptedPassword,
-            item.iv,
-            item.authTag
-        );
-
-        res.status(200).json({
-            success: true,
-            password: decrypted
-        });
-    }
-    catch (error) {
-        console.error('revealPassword controller failed', error)
         next(error)
     }
 }
@@ -240,7 +204,6 @@ const searchPassword = async (req, res, next) => {
         const { search } = req.query;
 
         let filter = { userId: req.user._id };
-        console.log("searched query", search)
 
         if (search) {
             filter.$or = [
@@ -266,4 +229,4 @@ const searchPassword = async (req, res, next) => {
 }
 
 
-module.exports = { addPassword, fetchPassword, revealPassword, fetchSinglePassword, editPassword, removePassword, searchPassword, getPasswordStats }
+module.exports = { addPassword, fetchPassword, fetchSinglePassword, editPassword, removePassword, searchPassword, getPasswordStats }

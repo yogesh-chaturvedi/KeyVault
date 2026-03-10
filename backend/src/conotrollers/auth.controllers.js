@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const crypto = require("crypto");
 const deriveKey = require('../utils/deriveKey');
 const { encryptPassword } = require('../utils/encryption');
-const helpers = require('../utils/helpers')
+const helpers = require('../utils/helpers');
+const vaultSessions = require('../utils/vaultSession');
 
 
 const { capitalizeName } = helpers
@@ -121,12 +122,14 @@ const loginController = async (req, res, next) => {
         });
 
     } catch (error) {
-        next(error); // unexpected errors
+        next(error);
     }
 };
 
 // logout controller 
 const logoutController = (req, res) => {
+
+    const userId = req.user._id.toString()
 
     res.clearCookie("token", {
         httpOnly: true,
@@ -134,6 +137,9 @@ const logoutController = (req, res) => {
         sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000
     });
+
+    // deleting vault session
+    vaultSessions.delete(userId)
 
     res.status(200).json({
         success: true,

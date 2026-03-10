@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useForm } from "react-hook-form"
-import { Mail, Lock } from "lucide-react";
+import { Mail, Lock, EyeOff, Eye } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthWrappers from '../component/ui/wrappers/AuthWrappers';
 import AuthInput from '../component/ui/input/AuthInput';
@@ -8,13 +8,15 @@ import AuthButton from '../component/ui/buttons/AuthButton';
 import { loginUser } from '../services/auth.services';
 import { toast } from "react-toastify";
 import { AuthContext } from '../context/AuthContext';
+import { useState } from 'react';
 
 
 const Login = () => {
 
 
     const navigate = useNavigate();
-    const { user, setUser } = useContext(AuthContext);
+    const { setUser } = useContext(AuthContext);
+    const [showPassword, setShowPassword] = useState(false)
 
     const {
         register,
@@ -27,7 +29,6 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             const response = await loginUser(data);
-            console.log("Success:", response);
             setUser(response.user)
             if (response.success) {
                 toast.success("Login Successful 🎉");
@@ -60,8 +61,16 @@ const Login = () => {
                     <AuthInput label='Email' icon={Mail} type='email' placeholder="you@example.com" error={errors.email} register={register("email", { required: 'Email is required' })} />
 
                     {/* Password */}
-                    <AuthInput label='Password' icon={Lock} type='password' placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
-
+                    <div className='relative'>
+                        <AuthInput label='Password' icon={Lock} type={showPassword ? "text" : "password"} placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
+                        <button
+                            type='button'
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="text-gray-500 hover:text-white absolute top-11 right-2"
+                        >
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
                     {/* Button */}
                     <AuthButton type="submit" text="Login" />
                 </form>

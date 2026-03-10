@@ -49,7 +49,6 @@ router.get('/status', protectRoute, async (req, res) => {
 
     const userId = req.user._id.toString();
     const session = vaultSessions.get(userId);
-    console.log("statis session", session)
 
     if (!session) {
         return res.json({ unlocked: false });

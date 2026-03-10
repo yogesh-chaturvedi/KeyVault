@@ -15,7 +15,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [query, setQuery] = useState("");
     const { user, setUser } = useContext(AuthContext);
-    const { passwords, results, setResults } = useContext(PasswordContext);
+    const { passwords, setResults } = useContext(PasswordContext);
 
     const linkClass = ({ isActive }) =>
         `px-3 py-1 rounded-md text-sm font-medium transition
@@ -61,8 +61,8 @@ const Navbar = () => {
             }
         }
         catch (error) {
-            console.error("handleSearch failed", error);
-            toast.error('Search Failed!')
+            console.error("handleSearch failed", error.response.data.message);
+            toast.error('Search Failed!');
         }
     }
 

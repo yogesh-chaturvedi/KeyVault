@@ -1,5 +1,5 @@
 import React from "react";
-import { Lock, Shield, KeyRound } from "lucide-react";
+import { Lock, Shield, KeyRound, EyeOff, Eye } from "lucide-react";
 import { useState } from "react";
 import { unlockVault } from "../services/auth.services";
 import { toast } from 'react-toastify'
@@ -10,15 +10,15 @@ import { AuthContext } from "../context/AuthContext";
 
 const VaultLocked = () => {
 
-    const { user, vaultUnlocked, setVaultUnlocked } = useContext(AuthContext)
+    const { user, setVaultUnlocked } = useContext(AuthContext)
     const [MasterPass, setMasterPass] = useState('')
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(true)
 
     async function handleUnlockVault() {
         try {
             const response = await unlockVault(MasterPass)
             if (response.success) {
-                console.log("success lockvault", response)
                 setVaultUnlocked(true)
                 navigate('/')
                 toast.success(response.message);
@@ -78,10 +78,17 @@ const VaultLocked = () => {
                         <input
                             value={MasterPass}
                             onChange={handleChange}
-                            type="password"
+                            type={showPassword ? "password":"text"}
                             placeholder="Enter master password"
                             className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                        <button
+                            type='button'
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="text-gray-500 hover:text-black absolute right-3 top-3"
+                        >
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
                     </div>
                 </div>
 

@@ -1,16 +1,20 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User, EyeOff, Eye } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthWrappers from '../component/ui/wrappers/AuthWrappers';
 import AuthInput from '../component/ui/input/AuthInput';
 import AuthButton from '../component/ui/buttons/AuthButton';
 import { signupUser } from '../services/auth.services';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 const Signup = () => {
 
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false)
+    const [showMPassword, setShowMPassword] = useState(false)
+
     const {
         register,
         handleSubmit,
@@ -23,7 +27,6 @@ const Signup = () => {
         try {
             console.log("data", data)
             const response = await signupUser(data);
-            console.log("Success:", response);
             if (response.success) {
                 toast.success("Signup Successful 🎉");
             }
@@ -57,13 +60,29 @@ const Signup = () => {
 
                     {/* Email */}
                     <AuthInput label="Email" icon={Mail} type="email" placeholder="you@example.com" error={errors.email} register={register("email", { required: 'Email is required' })} />
-
-                    {/* Password */}
-                    <AuthInput label="Password" icon={Lock} type="password" placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
+                    <div className='relative'>
+                        {/* Password */}
+                        <AuthInput label="Password" icon={Lock} type={showPassword ? "text" : "password"} placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
+                        <button
+                            type='button'
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="text-gray-500 hover:text-white absolute top-11 right-2"
+                        >
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
 
                     {/* Master Password */}
-                    <AuthInput label="Master Password" icon={Lock} type="password" placeholder="Master Password" error={errors.masterPassword} register={register("masterPassword", { required: 'Master Password is required', minLength: { value: 5, message: "Master Password must be at least 5 characters long" } })} />
-
+                    <div className='relative'>
+                        <AuthInput label="Master Password" icon={Lock} type={showMPassword ? "text" : "password"} placeholder="Master Password" error={errors.masterPassword} register={register("masterPassword", { required: 'Master Password is required', minLength: { value: 5, message: "Master Password must be at least 5 characters long" } })} />
+                        <button
+                            type='button'
+                            onClick={() => setShowMPassword(!showMPassword)}
+                            className="text-gray-500 hover:text-white absolute top-11 right-2"
+                        >
+                            {showMPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                    </div>
                     {/* Button */}
                     <AuthButton type="submit" text="Sign Up" />
                 </form>

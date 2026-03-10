@@ -4,13 +4,12 @@ import { PasswordContext } from "../context/PasswordContext";
 
 const useFilterPasswords = () => {
 
-    const { passwords, results } = useContext(PasswordContext);
+    const { passwords } = useContext(PasswordContext);
 
-    const displayPasswords = results && results.length > 0 ? results : passwords;
 
-    let socialVault = displayPasswords?.filter((item) => item.category === "Social");
-    let appVault = displayPasswords?.filter((item) => item.category === "App");
-    let walletVault = displayPasswords?.filter((item) => item.category === "Wallet");
+    let socialVault = passwords?.filter((item) => item.category === "Social");
+    let appVault = passwords?.filter((item) => item.category === "App");
+    let walletVault = passwords?.filter((item) => item.category === "Wallet");
 
     return { socialVault, appVault, walletVault };
 }

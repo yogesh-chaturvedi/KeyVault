@@ -12,6 +12,7 @@ const AuthInput = ({ label, icon: Icon, type, placeholder, error, register }) =>
           {...register}
           className={`authInputFields ${error ? 'border-red-500 focus:ring-red-500' : ''}`}
         />
+       
       </div>
       {error && (
         <p className="text-xs text-red-500 mt-1">
