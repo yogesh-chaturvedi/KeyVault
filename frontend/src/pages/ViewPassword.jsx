@@ -57,6 +57,7 @@ const ViewPassword = () => {
     }
 
     const handleDelete = async () => {
+        const previousPasswords = passwords
 
         const remainingVaults = passwords.filter((item) => item._id !== id);
         setPasswords(remainingVaults);
@@ -68,7 +69,7 @@ const ViewPassword = () => {
                 navigate('/passwords')
             }
             else {
-                fetchPasswords();
+                setPasswords(previousPasswords)
             }
         }
         catch (error) {

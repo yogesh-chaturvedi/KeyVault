@@ -16,7 +16,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     const { setUser } = useContext(AuthContext);
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(true)
 
     const {
         register,
@@ -62,7 +62,7 @@ const Login = () => {
 
                     {/* Password */}
                     <div className='relative'>
-                        <AuthInput label='Password' icon={Lock} type={showPassword ? "text" : "password"} placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
+                        <AuthInput label='Password' icon={Lock} type={showPassword ? "password" : "text"} placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
                         <button
                             type='button'
                             onClick={() => setShowPassword(!showPassword)}

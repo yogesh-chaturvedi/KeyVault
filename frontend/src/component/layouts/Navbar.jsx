@@ -55,7 +55,6 @@ const Navbar = () => {
         try {
             console.log(query)
             const response = await searchPassword(query);
-            console.log("search result frontend", response)
             if (response.success) {
                 setResults(response.vault)
             }

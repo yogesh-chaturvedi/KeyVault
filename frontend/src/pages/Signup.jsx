@@ -12,8 +12,8 @@ import { useState } from 'react';
 const Signup = () => {
 
     const navigate = useNavigate()
-    const [showPassword, setShowPassword] = useState(false)
-    const [showMPassword, setShowMPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(true)
+    const [showMPassword, setShowMPassword] = useState(true)
 
     const {
         register,
@@ -25,7 +25,6 @@ const Signup = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log("data", data)
             const response = await signupUser(data);
             if (response.success) {
                 toast.success("Signup Successful 🎉");
@@ -62,7 +61,7 @@ const Signup = () => {
                     <AuthInput label="Email" icon={Mail} type="email" placeholder="you@example.com" error={errors.email} register={register("email", { required: 'Email is required' })} />
                     <div className='relative'>
                         {/* Password */}
-                        <AuthInput label="Password" icon={Lock} type={showPassword ? "text" : "password"} placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
+                        <AuthInput label="Password" icon={Lock} type={showPassword ? "password" : "text"} placeholder="••••••••" error={errors.password} register={register("password", { required: 'Password is required', minLength: { value: 5, message: "Password must be at least 5 characters long" } })} />
                         <button
                             type='button'
                             onClick={() => setShowPassword(!showPassword)}
@@ -74,7 +73,7 @@ const Signup = () => {
 
                     {/* Master Password */}
                     <div className='relative'>
-                        <AuthInput label="Master Password" icon={Lock} type={showMPassword ? "text" : "password"} placeholder="Master Password" error={errors.masterPassword} register={register("masterPassword", { required: 'Master Password is required', minLength: { value: 5, message: "Master Password must be at least 5 characters long" } })} />
+                        <AuthInput label="Master Password" icon={Lock} type={showMPassword ? "password" : "text"} placeholder="Master Password" error={errors.masterPassword} register={register("masterPassword", { required: 'Master Password is required', minLength: { value: 5, message: "Master Password must be at least 5 characters long" } })} />
                         <button
                             type='button'
                             onClick={() => setShowMPassword(!showMPassword)}
