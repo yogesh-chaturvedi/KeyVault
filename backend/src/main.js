@@ -11,6 +11,7 @@ const PasswordRoutes = require('./router/PasswordRoutes')
 const UserRoutes = require('./router/UserRoutes')
 const UnlockVaultRoute = require('./router/UnlockVaultRoutes')
 const globalErrorHandler = require('./middlewares/error.middleware')
+const helmet = require('helmet')
 
 app.use(cors({
     origin: "https://key-vault-swart.vercel.app",
@@ -20,11 +21,18 @@ app.use(cors({
 
 const port = process.env.PORT || 3000;
 
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 app.use(cookieParser());
 app.use(express.json());
+
+app.use(
+    helmet({
+        crossOriginResourcePolicy: false,
+    })
+);
 
 // Add this health check route
 app.get('/check/health', (req, res) => {
