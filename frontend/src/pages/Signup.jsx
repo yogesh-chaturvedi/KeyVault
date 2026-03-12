@@ -19,7 +19,7 @@ const Signup = () => {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
+        formState: { errors, isValid },
     } = useForm()
 
 
@@ -83,7 +83,7 @@ const Signup = () => {
                         </button>
                     </div>
                     {/* Button */}
-                    <AuthButton type="submit" text="Sign Up" />
+                    <AuthButton type="submit" text="Sign Up" isDisabled={!isValid} />
                 </form>
 
                 {/* Login text */}

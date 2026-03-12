@@ -78,7 +78,7 @@ const VaultLocked = () => {
                         <input
                             value={MasterPass}
                             onChange={handleChange}
-                            type={showPassword ? "password":"text"}
+                            type={showPassword ? "password" : "text"}
                             placeholder="Enter master password"
                             className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -95,6 +95,7 @@ const VaultLocked = () => {
 
                 {/* Unlock Button */}
                 <button
+                    disabled={!MasterPass}
                     onClick={() => { handleUnlockVault() }}
                     className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
                 >

@@ -22,7 +22,7 @@ const Login = () => {
         register,
         handleSubmit,
         watch,
-        formState: { errors },
+        formState: { errors, isValid },
     } = useForm()
 
 
@@ -32,8 +32,8 @@ const Login = () => {
             setUser(response.user)
             if (response.success) {
                 toast.success("Login Successful 🎉");
+                navigate('/vaultLocked')
             }
-            navigate('/vaultLocked')
         }
         catch (error) {
             console.error("Login failed:", error.response?.data?.message)
@@ -72,7 +72,7 @@ const Login = () => {
                         </button>
                     </div>
                     {/* Button */}
-                    <AuthButton type="submit" text="Login" />
+                    <AuthButton type="submit" text="Login" isDisabled={!isValid} />
                 </form>
 
                 {/* Signup text */}
